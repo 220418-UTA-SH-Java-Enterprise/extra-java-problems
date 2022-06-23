@@ -1,8 +1,12 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class EvaluationService {
 
@@ -15,7 +19,19 @@ public class EvaluationService {
 	 */
 	public String reverse(String string) {
 		
-		return "";
+		String result = "";
+		
+		char[] letters = string.toCharArray();
+		
+		for(int i = letters.length; i >= 0; i--) {
+			result += letters;
+			
+			System.out.println(result);
+		}
+		
+		
+		
+		return result;
 	}
 
 	/**
@@ -26,9 +42,26 @@ public class EvaluationService {
 	 * @param phrase
 	 * @return
 	 */
+	
+	
+	
 	public String acronym(String phrase) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		
+		String result = "";
+		
+		result += phrase.charAt(0);
+		
+		for (int i = 1; i < phrase.length(); i++) {
+			if (Character.isWhitespace(phrase.charAt(i))) {
+				result = result + phrase.charAt(i);
+				result += phrase.charAt(i+1);
+			}
+ 		}
+		
+		return result.replaceAll("\\s+","").toUpperCase();
+		
+		
 	}
 
 	/**
@@ -82,17 +115,30 @@ public class EvaluationService {
 
 		public boolean isEquilateral() {
 			// TODO Write an implementation for this method declaration
-			return false;
+			
+			if(sideOne == sideTwo && sideTwo == sideThree) {
+			
+			return true;
+			
+			}else return false;
 		}
 
 		public boolean isIsosceles() {
 			// TODO Write an implementation for this method declaration
-			return false;
+			
+			if(sideOne == sideTwo || sideTwo == sideThree) {
+			
+			return true;
+			}else return false;
 		}
 
 		public boolean isScalene() {
 			// TODO Write an implementation for this method declaration
+			
+			if(sideOne != sideTwo && sideTwo != sideThree && sideOne != sideThree) {
+			
 			return false;
+			}else return false;
 		}
 
 	}
@@ -114,7 +160,24 @@ public class EvaluationService {
 	 */
 	public int getScrabbleScore(String string) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		
+		char[] stringArr = string.toCharArray();
+		int result = 0;
+	    char scores[] = { 1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10 };
+	    for (char Letter : stringArr)
+	    {
+	        if (Letter >= 'A' && Letter <= 'Z')
+	        {
+	            result += scores[Letter - 'A'];
+	            System.out.println(result);
+	        }
+	        else
+	        {
+	            System.out.println("There was an error!");
+	        }
+	    }
+		
+		return result;
 	}
 
 	/**
@@ -150,7 +213,12 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		
+		String result = string.replaceAll("\\D", "");
+		
+		System.out.println(result);
+		
+		return result;
 	}
 
 	/**
@@ -162,9 +230,37 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
+	public String wordCount(String string) {
 		return null;
+		// TODO Write an implementation for this method declaration
+		
+		
+		// Map<String, Integer> hashMap = new HashMap<>();
+		
+		String[] words = string.split(" ");
+		 
+        for (String word : words) {
+ 
+            
+            Integer integer = hashMap.get(word);
+ 
+            if (integer == null)
+                
+                hashMap.put(word, 1);
+ 
+            else {
+                
+                hashMap.put(word, integer + 1);
+            }
+        }
+        System.out.println(hashMap);
+    }
+		
+		
+		
+	    
+		
+		
 	}
 
 	/**
