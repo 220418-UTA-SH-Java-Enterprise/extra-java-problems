@@ -1,8 +1,10 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class EvaluationService {
 
@@ -15,7 +17,18 @@ public class EvaluationService {
 	 */
 	public String reverse(String string) {
 		
-		return "";
+		// empty string to hold reversed string
+		String reverseString = "";
+		
+		// iterate through each letter and concat
+		for(int i=0; i<string.length(); i++) {
+			char letter = string.charAt(i);
+			reverseString = (letter + reverseString);
+		}
+		
+		//System.out.println(reverseString);  // testing
+		
+		return reverseString;
 	}
 
 	/**
@@ -28,7 +41,32 @@ public class EvaluationService {
 	 */
 	public String acronym(String phrase) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		// System.out.println(phrase);  // testing
+		
+		// string to hold acronym
+		String acronym = "";
+		char hyphen = '-';
+		
+		acronym = acronym + phrase.charAt(0);
+		
+		// iterate through string and concat each letter that follows the whitespace
+		for(int i=0; i<phrase.length(); i++) {
+			
+			// check if char is a hyphen
+			if (phrase.charAt(i) == hyphen){
+				acronym = acronym + phrase.charAt(i+1);
+			}
+			
+			// check if char is a space
+			if((Character.isWhitespace(phrase.charAt(i)))){
+                acronym = acronym + phrase.charAt(i+1);
+            }
+		}
+		
+		//System.out.println(acronym.toUpperCase());  // testing
+		
+		// uppercase acronym and return it
+		return acronym.toUpperCase();
 	}
 
 	/**
@@ -82,26 +120,56 @@ public class EvaluationService {
 
 		public boolean isEquilateral() {
 			// TODO Write an implementation for this method declaration
-			return false;
+			//equilateral triangle has all three sides the same length
+			
+			if((sideOne == sideTwo) && (sideTwo == sideThree)) {
+				return true;
+			}
+			
+			else {
+				return false;
+			}
 		}
 
 		public boolean isIsosceles() {
 			// TODO Write an implementation for this method declaration
-			return false;
+			//isosceles triangle has at least two sides the same length.
+			if((sideOne == sideTwo) || (sideOne == sideThree) || (sideThree == sideOne)) {
+				return true;
+			}
+			
+			else {
+				return false;
+			}
 		}
 
 		public boolean isScalene() {
 			// TODO Write an implementation for this method declaration
-			return false;
+			// A scalene triangle has all sides of different lengths.
+			if((sideOne == sideTwo) || (sideTwo == sideThree) || (sideOne == sideThree)) {
+				return false;
+			}
+			
+			else {
+				return true;
+			}
 		}
-
 	}
 
 	/**
 	 * 4. Given a word, compute the scrabble score for that word.
 	 * 
-	 * --Letter Values-- Letter Value A, E, I, O, U, L, N, R, S, T = 1; D, G = 2; B,
-	 * C, M, P = 3; F, H, V, W, Y = 4; K = 5; J, X = 8; Q, Z = 10; Examples
+	 * --Letter Values-- Letter Value 
+	 * 
+	 * A, E, I, O, U, L, N, R, S, T = 1; 
+	 * D, G = 2; 
+	 * B, C, M, P = 3; 
+	 * F, H, V, W, Y = 4; 
+	 * K = 5; 
+	 * J, X = 8; 
+	 * Q, Z = 10; 
+	 * 
+	 * Examples
 	 * "cabbage" should be scored as worth 14 points:
 	 * 
 	 * 3 points for C, 1 point for A, twice 3 points for B, twice 2 points for G, 1
@@ -113,8 +181,53 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
+		
+		String onePoint = "A, E, I, O, U, L, N, R, S, T";
+		String twoPoint = "D, G";
+		String threePoint = "B, C, M, P";
+		String fourPoint = "F, H, V, W, Y";
+		String fivePoint = "K";
+		String eightPoint = "J, X";
+		String tenPoint = "Q, Z";
+		
 		// TODO Write an implementation for this method declaration
-		return 0;
+		int points = 0;
+		
+		for(int i=0; i<string.length(); i++) {
+			char letter = Character.toUpperCase(string.charAt(i));
+			
+			if (onePoint.contains(Character.toString(letter))){
+				points += 1;
+			}
+			
+			if (twoPoint.contains(Character.toString(letter))){
+				points += 2;
+			}
+			
+			if (threePoint.contains(Character.toString(letter))){
+				points += 3;
+			}
+			
+			if (fourPoint.contains(Character.toString(letter))){
+				points += 4;
+			}
+			
+			if (fivePoint.contains(Character.toString(letter))){
+				points += 5;
+			}
+			
+			if (eightPoint.contains(Character.toString(letter))){
+				points += 8;
+			}
+			
+			if (tenPoint.contains(Character.toString(letter))){
+				points += 10;
+			}
+		}
+		
+		// System.out.println(points);  // testing
+		
+		return points;
 	}
 
 	/**
@@ -150,9 +263,23 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		String number = "";
+		
+		for(int i=0; i<string.length(); i++) {
+			if(Character.isDigit(string.charAt(i))){
+				number = number + string.charAt(i);
+			}
+		}
+		
+		if((number.length() > 10) || (number.length() < 10)){
+			return null;
+		} else {
+			return number;
+		}
+		
 	}
 
+	
 	/**
 	 * 6. Given a phrase, count the occurrences of each word in that phrase.
 	 * 
@@ -163,10 +290,25 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
-	}
-
+        try (Scanner scanner = new Scanner(string)) {
+			Map<String, Integer> wordCount = new HashMap<>();
+			
+			while (scanner.hasNext()) {
+			    String s = scanner.next();
+			    
+			    if (!wordCount.containsKey(s)) {
+			        wordCount.put(s, 1);
+			    } else {
+			        wordCount.put(s, wordCount.get(s) + 1);
+			    }
+			}
+			//System.out.println(wordCount);  // testing
+			
+			return wordCount;
+		}
+    }
+	
+	
 	/**
 	 * 7. Implement a binary search algorithm.
 	 * 
@@ -222,7 +364,6 @@ public class EvaluationService {
 		public void setSortedList(List<T> sortedList) {
 			this.sortedList = sortedList;
 		}
-
 	}
 
 	/**
