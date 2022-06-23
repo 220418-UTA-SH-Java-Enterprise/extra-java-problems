@@ -230,16 +230,16 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	public String wordCount(String string) {
-		return null;
+	public Map<String, Integer> wordCount(String string) {
+		
 		// TODO Write an implementation for this method declaration
 		
 		
-		// Map<String, Integer> hashMap = new HashMap<>();
+		Map<String, Integer> hashMap = new HashMap<>();
 		
-		String[] words = string.split(" ");
+		String[] input = string.split(" ");
 		 
-        for (String word : words) {
+        for (String word : input) {
  
             
             Integer integer = hashMap.get(word);
@@ -254,7 +254,9 @@ public class EvaluationService {
             }
         }
         System.out.println(hashMap);
-    }
+    
+	
+	return hashMap;
 		
 		
 		
