@@ -1,8 +1,14 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class EvaluationService {
 
@@ -15,7 +21,33 @@ public class EvaluationService {
 	 */
 	public String reverse(String string) {
 		
-		return "";
+		
+		//create a chararray of the string
+		char[] charArray = string.toCharArray();
+		//reverse the chararray
+		charArray = reverseArray(charArray);
+		//create a string from the chararray
+		String reversedString = new String(charArray);
+		//return the reversed string
+		return reversedString;
+		
+	}
+
+	/**
+	 * Used for question 1
+	 * Reverses an array of characters.
+	 * @param charArray
+	 * @return
+	 */
+	private char[] reverseArray(char[] charArray) {
+		//use a for loop to reverse the array
+		for (int i = 0; i < charArray.length / 2; i++) {
+			char temp = charArray[i];
+			charArray[i] = charArray[charArray.length - 1 - i];
+			charArray[charArray.length - 1 - i] = temp;
+		}
+		//return the reversed array
+		return charArray;
 	}
 
 	/**
@@ -27,8 +59,13 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		
+		//convert phrase to an arrayList of strings
+		List<String> words = new ArrayList<String>();
+		words = Arrays.asList(phrase.split("[ -]"));
+		
+		//return the first letter capitilized of each word in the arrayList
+		return words.stream().map(word -> word.substring(0, 1).toUpperCase()).collect(Collectors.joining());
 	}
 
 	/**
@@ -81,18 +118,19 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			//return true if all sides are the same length
+			return (sideOne == sideTwo && sideTwo == sideThree);
 		}
 
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			//return true if at least two sides are the same length
+			return (sideOne == sideTwo || sideTwo == sideThree || sideOne == sideThree);
 		}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			//return true if all sides are different lengths
+			return (sideOne != sideTwo && sideTwo != sideThree && sideOne != sideThree);
+			
 		}
 
 	}
@@ -113,9 +151,25 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		
+		//create a map of the letter values
+		Map<Character, Integer> letterValues = Stream.of(new Object[][] { { 'A', 1 }, { 'E', 1 }, { 'I', 1 }, { 'O', 1 },
+				{ 'U', 1 }, { 'L', 1 }, { 'N', 1 }, { 'R', 1 }, { 'S', 1 }, { 'T', 1 }, { 'D', 2 }, { 'G', 2 },
+				{ 'B', 3 }, { 'C', 3 }, { 'M', 3 }, { 'P', 3 }, { 'F', 4 }, { 'H', 4 }, { 'V', 4 }, { 'W', 4 },
+				{ 'Y', 4 }, { 'K', 5 }, { 'J', 8 }, { 'X', 8 }, { 'Q', 10 }, { 'Z', 10 } }).collect(Collectors.toMap(data -> (Character) data[0], data -> (Integer) data[1]));
+		//create a chararray of the string
+		char[] charArray = string.toUpperCase().toCharArray();
+		//create a variable to store the score
+		int score = 0;
+		//use a for loop to add the letter value to the score
+		for (char c : charArray) {
+			score += letterValues.get(c);
+		}
+		//return the score
+		return score;
 	}
+
+
 
 	/**
 	 * 5. Clean up user-entered phone numbers so that they can be sent SMS messages.
@@ -149,8 +203,35 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		
+		//remove all spaces, dashes, parenthesis, and dots
+		String cleanedString = string.replaceAll("[\\s-()\\.]", "");	
+		//throw an exception if the string is not numeric
+		if (!cleanedString.matches("[0-9]+")) {
+			throw new IllegalArgumentException("String is not numeric");
+		}
+		
+		//throw an exception if the string has more than 11 characters
+		if (cleanedString.length() > 11) {
+			throw new IllegalArgumentException("String cannot be longer than 11 characters");
+		}
+		//create a string builder to store the cleaned number
+		StringBuilder sb = new StringBuilder();
+		//create a char array of the string
+		char[] charArray = cleanedString.toCharArray();
+		//use a for loop to remove the punctuation and the country code
+		for (char c : charArray) {
+			if (Character.isDigit(c)) {
+				sb.append(c);
+			}
+		}
+		//remove the country code if present
+		if (sb.length() == 11) {
+			sb.delete(0, 1);
+		}
+		//return the cleaned number
+		return sb.toString();
+		
 	}
 
 	/**
@@ -163,8 +244,22 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		
+		//create a map to store the word counts
+		Map<String, Integer> wordCounts = new HashMap<String, Integer>();
+		//create a string array of the string split by spaces, punctuation, and newlines
+		String[] stringArray = string.replaceAll("[\\s,]", " ").split("\\s+");
+		
+		//use a for loop to add the word counts to the map
+		for (String s : stringArray) {
+			if (wordCounts.containsKey(s)) {
+				wordCounts.put(s, wordCounts.get(s) + 1);
+			} else {
+				wordCounts.put(s, 1);
+			}
+		}
+		//return the map
+		return wordCounts;
 	}
 
 	/**
@@ -202,12 +297,35 @@ public class EvaluationService {
 	 * binary search is a dichotomic divide and conquer search algorithm.
 	 * 
 	 */
-	static class BinarySearch<T> {
+	static class BinarySearch<T extends Comparable<T>> {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
-			// TODO Write an implementation for this method declaration
-			return 0;
+			
+			int low = 0;
+        int high = sortedList.size() - 1;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            T midVal = sortedList.get(mid);
+            int result = t.compareTo(midVal);
+
+            if (result < 0) {
+                high = mid - 1;
+            }
+
+            else if (result > 0) {
+                low = mid + 1;
+            } 
+
+            else {
+                return mid;
+            }
+        }
+
+        return -1;
+			
+			
 		}
 
 		public BinarySearch(List<T> sortedList) {
@@ -243,8 +361,57 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		
+		//create a string array of the string split by spaces
+		String[] stringArray = string.split("\\s+");
+		//create a string builder to store the translated string
+		StringBuilder sb = new StringBuilder();
+		//use a for loop to translate each word and add it to the string builder
+		for (String s : stringArray) {
+			sb.append(translateWord(s) + " ");
+		}
+		//remove the last space
+		sb.deleteCharAt(sb.length() - 1);
+		//return the translated string
+		return sb.toString();
+
+		
+	}
+
+	/**
+	 * used for question 8
+	 * translats a word to Pig Latin
+	 * @param s
+	 * @return
+	 */
+	private String translateWord(String s) {
+		
+		
+		//use regex to see if the string starts with a vowel
+		if (s.matches("^[aeiou].*")) {
+			//if it starts with a vowel, add "ay" to the end
+			return s + "ay";
+		}
+		//if the word starts with qu, move the qu to the end and add "ay" to the end
+		else if (s.matches("^qu.*")) {
+			return s.substring(2) + s.substring(0, 2) + "ay";
+		}
+		else {
+			//find the index of the first vowel in the string
+			int index = 0;
+			for(int i = 0; i < s.length(); i++) {
+				if (s.substring(i, i + 1).matches("[aeiou]")) {
+					//if it finds a vowel, set the index to that position
+					index = i;
+					break;
+				}
+			}
+			
+			//move the first consonant to the end of the string and add "ay"
+			return s.substring(index) + s.substring(0, index) + "ay";
+		}
+		
+
 	}
 
 	/**
@@ -263,8 +430,19 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		
+		//create a string of the input
+		String inputString = Integer.toString(input);
+		//create a variable to store the sum of the digits raised to the power of the number of digits
+		int sum = 0;
+		//create a variable to store the number of digits in the input
+		int numDigits = inputString.length();
+		//use a for loop to calculate the sum of the digits raised to the power of the number of digits
+		for (int i = 0; i < numDigits; i++) {
+			//multiply the digit by the power of the number of digits and add it to the sum
+			sum += Math.pow(Integer.parseInt(inputString.substring(i, i + 1)), numDigits);
+		}
+		return sum == input;
 	}
 
 	/**
@@ -278,8 +456,35 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		
+		//create a list to store the prime factors
+		List<Long> primeFactors = new ArrayList<Long>();
+		//create a variable to store the number to be tested
+		long n = l;
+		// add the number of 2s that divide the number to the list
+        while (n % 2 == 0) {
+           primeFactors.add(2L);
+            n /= 2;
+        }
+		// n must be odd at this point.  So we can
+        // skip one element (Note i = i +2)
+        for (long i = 3; i <= Math.sqrt(n); i += 2) {
+            // While i divides n, print i and divide n
+            while (n % i == 0) {
+                primeFactors.add(i);
+                n /= i;
+            }
+        }
+ 
+        // This condition is to handle the case whien
+        // n is a prime number greater than 2
+        if (n > 2){
+            primeFactors.add(n);
+		}
+
+		
+		//return the list of prime factors
+		return primeFactors;
 	}
 
 	/**
@@ -317,10 +522,44 @@ public class EvaluationService {
 		}
 
 		public String rotate(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			//if the character is a letter, rotate it by the key
+			//if the character is not a letter, leave it as is
+			return string.chars().mapToObj(c -> Character.toString((char)(isPuctuation(c)? c : shift(c)))).collect(Collectors.joining());
+		}
+		
+		/**
+		 * shifts the character by the key
+		 * @param c
+		 * @return
+		 */
+		private char shift(int c) {
+			int max = 0;
+			
+			//determine if c is upper or lower case
+			if (Character.isUpperCase(c)) {
+				max = 'Z';
+			}
+			else {
+				max = 'z';
+			}
+			//rotate the character by the key mod 26
+			c+=key%26;
+			if(c>max) {
+				c-=26;
+			}
+			return (char)c;
 		}
 
+		/**
+		 * used for question 11
+		 * returns true if the character is a punctuation mark
+		 * @param c
+		 */
+		private boolean isPuctuation(int c) {
+			//return true if the character is a punctuation mark
+			return !Character.isLetter(c);
+			
+		}
 	}
 
 	/**
@@ -336,7 +575,9 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int calculateNthPrime(int i) {
-		// TODO Write an implementation for this method declaration
+		
+		
+		
 		return 0;
 	}
 
