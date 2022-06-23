@@ -1,8 +1,12 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class EvaluationService {
 
@@ -14,8 +18,11 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String reverse(String string) {
-		
-		return "";
+		String reversed = "";
+		for (int i = string.length() - 1; i >= 0; i--) {
+			reversed += string.charAt(i);
+		}
+		return reversed;
 	}
 
 	/**
@@ -27,9 +34,17 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String acronymResult = "";
+		acronymResult += phrase.charAt(0);
+		for (int i = 1; i < phrase.length(); i++) {
+			if (!Character.isLetter(phrase.charAt(i))) {
+				if (Character.isLetter(phrase.charAt(i+1)))
+					acronymResult += phrase.charAt(i+1);
+			}
+		}
+		return acronymResult.toUpperCase();
 	}
+	
 
 	/**
 	 * 3. Determine if a triangle is equilateral, isosceles, or scalene. An
@@ -81,18 +96,21 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
+			if (sideOne == sideTwo && sideTwo == sideThree)
+				return true;
 			return false;
 		}
 
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
+			if (sideOne == sideTwo || sideOne == sideThree || sideTwo == sideThree)
+				return true;
 			return false;
 		}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			if (sideOne == sideTwo || sideOne == sideThree || sideTwo == sideThree)
+				return false;
+			return true;
 		}
 
 	}
@@ -113,8 +131,47 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		ArrayList<Character> ones = new ArrayList<Character>(Arrays
+				.asList('A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'));
+		ArrayList<Character> twos = new ArrayList<Character>(Arrays
+				.asList('D', 'G'));
+		ArrayList<Character> threes = new ArrayList<Character>(Arrays
+				.asList('B', 'C', 'M', 'P'));
+		ArrayList<Character> fours = new ArrayList<Character>(Arrays
+				.asList('F', 'H', 'V', 'W', 'Y'));
+		ArrayList<Character> fives = new ArrayList<Character>(Arrays
+				.asList('K'));
+		ArrayList<Character> eights = new ArrayList<Character>(Arrays
+				.asList('J', 'X'));
+		ArrayList<Character> tens = new ArrayList<Character>(Arrays
+				.asList('Q', 'Z'));
+		
+		int count = 0;;
+		for (int i = 0; i < string.length(); i++) {
+			char letter = Character.toUpperCase(string.charAt(i));
+			if (ones.contains(letter)) {
+				count += 1;
+			}
+			if (twos.contains(letter)) {
+				count += 2;
+			}
+			if (threes.contains(letter)) {
+				count += 3;
+			}
+			if (fours.contains(letter)) {
+				count += 4;
+			}
+			if (fives.contains(letter)) {
+				count += 5;
+			}
+			if (eights.contains(letter)) {
+				count += 8;
+			}
+			if (tens.contains(letter)) {
+				count += 10;
+			}
+		}
+		return count;
 	}
 
 	/**
@@ -149,8 +206,22 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		int count = 0;
+		String cleanNumber = "";
+		for (int i = 0; i < string.length(); i++) {
+			if (Character.isDigit(string.charAt(i))) {
+				if (cleanNumber.length() == 0) {
+					if (string.charAt(i) != '1') {
+						cleanNumber += string.charAt(i);
+					}
+				} else {
+					cleanNumber += string.charAt(i);
+				}
+			}
+		}
+		if (cleanNumber.length() != 10)
+			return null;
+		return cleanNumber;
 	}
 
 	/**
@@ -163,8 +234,19 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		try (Scanner scanner = new Scanner(string)) {
+			Map<String, Integer> wordCount = new HashMap<>();
+			
+			while (scanner.hasNext()) {
+				String s = scanner.next();
+				if (!wordCount.containsKey(s)) {
+					wordCount.put(s, 1);
+				} else {
+					wordCount.put(s, wordCount.get(s) + 1);
+				}
+			}
+			return wordCount;
+		}
 	}
 
 	/**
