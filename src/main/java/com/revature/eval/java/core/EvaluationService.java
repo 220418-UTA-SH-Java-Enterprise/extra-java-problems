@@ -1,6 +1,8 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -14,8 +16,12 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String reverse(String string) {
-		
-		return "";
+		String result = "";
+		char[] letters =string.toCharArray();
+		for(int i = letters.length - 1; i >= 0; i--) {
+			result += letters[i];
+		}
+		return result;
 	}
 
 	/**
@@ -28,7 +34,19 @@ public class EvaluationService {
 	 */
 	public String acronym(String phrase) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		phrase = phrase.replaceAll("\\p{Punct}", " ");
+		String result = "";
+		result += phrase.charAt(0);
+		
+		//result = result.replaceAll("\\p{Punct}", " ");
+		for (int i = 1; i < phrase.length(); i++) {
+			if (Character.isWhitespace(phrase.charAt(i))) {
+				result = result + phrase.charAt(i);
+				result += phrase.charAt(i+1);
+			}
+			
+ 		}
+		return result.replaceAll("\\s+","").toUpperCase();
 	}
 
 	/**
@@ -82,16 +100,28 @@ public class EvaluationService {
 
 		public boolean isEquilateral() {
 			// TODO Write an implementation for this method declaration
+			if(sideOne == sideTwo && sideTwo == sideThree) 
+			{
+				return true;
+			}else
 			return false;
 		}
 
 		public boolean isIsosceles() {
 			// TODO Write an implementation for this method declaration
+			if(sideOne == sideTwo || sideTwo == sideThree || sideOne == sideThree) 
+			{
+				return true;
+			}else
 			return false;
 		}
 
 		public boolean isScalene() {
 			// TODO Write an implementation for this method declaration
+			if(sideOne != sideTwo || sideTwo != sideThree || sideOne != sideThree ) 
+			{
+				return true;
+			}else
 			return false;
 		}
 
@@ -114,7 +144,40 @@ public class EvaluationService {
 	 */
 	public int getScrabbleScore(String string) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		ArrayList<Character> one = new ArrayList<Character>(Arrays.asList('A' , 'E' , 'I' , 'O' , 'U' ,'L' , 'N' , 'R' , 'S' , 'T'));
+		ArrayList<Character> two = new ArrayList<Character>(Arrays.asList('D' , 'G'));
+		ArrayList<Character> three = new ArrayList<Character>(Arrays.asList('B' , 'C' , 'M' , 'P'));
+		ArrayList<Character> four = new ArrayList<Character>(Arrays.asList('F' , 'H' , 'V' , 'W' , 'Y'));
+		ArrayList<Character> five = new ArrayList<Character>(Arrays.asList('K'));
+		ArrayList<Character> eight = new ArrayList<Character>(Arrays.asList('J' , 'X'));
+		ArrayList<Character> ten = new ArrayList<Character>(Arrays.asList('Q' , 'Z'));
+
+		string = string.toUpperCase();
+		int score = 0;
+		for(int i = 0; i < string.length(); i++) {
+			if(one.contains(string.charAt(i))){
+				score += 1;
+			}
+			if(two.contains(string.charAt(i))){
+				score += 2;
+			}
+			if(three.contains(string.charAt(i))){
+				score += 3;
+			}
+			if(four.contains(string.charAt(i))){
+				score += 4;
+			}
+			if(five.contains(string.charAt(i))){
+				score += 5;
+			}
+			if(eight.contains(string.charAt(i))){
+				score += 8;
+			}
+			if(ten.contains(string.charAt(i))){
+				score += 10;
+			}
+		}
+		return score;
 	}
 
 	/**
@@ -150,7 +213,11 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		string = string.replaceAll("\\s+","");
+		string = string.replaceAll("\\p{Punct}", "");
+		if(string.length() != 10) throw new IllegalArgumentException(); 
+		
+		return string;
 	}
 
 	/**
@@ -164,6 +231,8 @@ public class EvaluationService {
 	 */
 	public Map<String, Integer> wordCount(String string) {
 		// TODO Write an implementation for this method declaration
+		
+	
 		return null;
 	}
 
@@ -207,6 +276,14 @@ public class EvaluationService {
 
 		public int indexOf(T t) {
 			// TODO Write an implementation for this method declaration
+			int first = 0;
+		    int last= sortedList.size() - 1;
+		    int mid = (first + last)/2;
+		    
+		    while( first <= last ){
+		    
+		    }
+
 			return 0;
 		}
 
