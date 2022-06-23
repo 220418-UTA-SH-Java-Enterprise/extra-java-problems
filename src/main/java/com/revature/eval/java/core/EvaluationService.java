@@ -1,6 +1,7 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,13 @@ public class EvaluationService {
 	 */
 	public String reverse(String string) {
 		
-		return "";
+		String result = "";
+        char[] letters = string.toCharArray();
+        for(int i = letters.length - 1; i>= 0; i--) {
+            result += letters[i];
+        }
+        
+        return result;
 	}
 
 	/**
@@ -27,8 +34,21 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		
+		String result = "";
+		
+		result += phrase.charAt(0);
+		
+		for(int i = 1; i < phrase.length(); i++) {
+			
+			if(Character.isWhitespace(phrase.charAt(i))) {
+				result = result + phrase.charAt(i);
+				result += phrase.charAt(i+1);
+					
+			}
+		}
+		
+		return result;
 	}
 
 	/**
@@ -81,18 +101,19 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
-			return false;
+					
+		return sideOne == sideTwo && sideTwo == sideThree;
+			
 		}
 
 		public boolean isIsosceles() {
 			// TODO Write an implementation for this method declaration
-			return false;
+			return sideOne == sideTwo || sideTwo == sideThree || sideThree == sideOne ;
 		}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			
+			return sideOne != sideTwo && sideTwo != sideThree;
 		}
 
 	}
@@ -113,8 +134,56 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		
+		int score = 0;
+		
+		String word = string.toUpperCase();
+		
+		for(int i = 0; i < word.length(); i++) {
+			
+			char letter = word.charAt(i);
+			
+			switch (letter) {
+			
+			case 'A':
+            case 'E':
+            case 'I':
+            case 'O':
+            case 'U':
+            case 'L':
+            case 'N':
+            case 'R':
+            case 'S':
+            case 'T':
+                score +=1; break;
+            case 'D':
+            case 'G':
+                score +=2; break;
+            case 'B':
+            case 'C':
+            case 'M':
+            case 'P':
+                score +=3; break;
+            case 'F':
+            case 'H':
+            case 'V':
+            case 'W':
+            case 'Y':
+                score +=4; break;
+            case 'K':
+                score +=5; break;
+            case 'J':
+            case 'X':
+                score +=8; break;
+            case 'Q':
+            case 'Z':
+                score +=10; break;
+            default: break;
+		}
+		}
+		
+		
+		return score;
 	}
 
 	/**
@@ -149,7 +218,15 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
+		
+		// remove the country code if present as first character in string
+		// now remove the special characters and whitespaces from phone number
+		// check if valid phone number length
+		// if number was nulled out, then throw exception
+		// else return number reformatted
+		
+		
+		
 		return null;
 	}
 
@@ -163,8 +240,25 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		
+		{
+			
+	 
+	        Map<String, Integer> str = new HashMap<>();
+	 
+	        String[] words = str.split(" ");
+	 
+	        for (String word : words) {
+	            
+	            if (str.containsKey(word))
+	                str.put(word, str.get(word) + 1);
+	 
+	            else
+	                str.put(word, 1);
+	        }
+	 
+	      return str;
+	    }
 	}
 
 	/**
@@ -243,9 +337,10 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
+	
 		return null;
 	}
+	
 
 	/**
 	 * 9. An Armstrong number is a number that is the sum of its own digits each
