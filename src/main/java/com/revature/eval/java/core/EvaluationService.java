@@ -1,6 +1,7 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,8 +15,18 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String reverse(String string) {
-		
-		return "";
+		String result = "";
+		//1. split my string up into a char array
+		char[] letters = string.toCharArray();
+		//2. iterate through that array backwards
+		for(int i = letters.length - 1; i >= 0; i--) {
+		//3. for each char, concatenate the letter into our result string
+			result += letters[i];
+		}
+		System.out.println(result);
+		//4. result result
+
+		return result;
 	}
 
 	/**
@@ -27,8 +38,19 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		char letter;
+		String acronym = "";
+		for (int i=0; i<phrase.length(); i++) {
+			letter = phrase.charAt(i);
+			if(i == 0) {
+				acronym = acronym + Character.toUpperCase(phrase.charAt(i));
+			}
+			if(letter == ' ' || letter == '-') {
+				acronym = acronym + Character.toUpperCase(phrase.charAt(i+1));
+
+			}
+		}
+		return acronym;
 	}
 
 	/**
@@ -81,17 +103,29 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
+			if(sideOne == sideTwo)
+			{
+				if(sideTwo == sideThree)
+				{
+					return true;
+				}
+			}
 			return false;
 		}
 
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
+			if(sideOne == sideTwo | sideOne == sideThree)
+			{
+				return true;
+			}
 			return false;
 		}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
+			if(sideOne != sideThree)
+			{
+				return true;
+			}
 			return false;
 		}
 
@@ -113,8 +147,82 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		int score = 0;
+
+		for(int i=0; i < string.length(); i++) {
+			char letter = string.charAt(i);
+			switch(letter) {
+				case 'a':
+				case 'A':
+				case 'e':
+				case 'E':
+				case 'i':
+				case 'I':
+				case 'o':
+				case 'O':
+				case 'u':
+				case 'U':
+				case 'l':
+				case 'L':
+				case 'n':
+				case 'N':
+				case 'r':
+				case 'R':
+				case 's':
+				case 'S':
+				case 't':
+				case 'T':
+					score += 1;
+					break;
+				case 'd':
+				case 'D':
+				case 'g':
+				case 'G':
+					score += 2;
+					break;
+				case 'b':
+				case 'B':
+				case 'c':
+				case 'C':
+				case 'm':
+				case 'M':
+				case 'p':
+				case 'P':
+					score += 3;
+					break;
+				case 'f':
+				case 'F':
+				case 'h':
+				case 'H':
+				case 'v':
+				case 'V':
+				case 'w':
+				case 'W':
+				case 'y':
+				case 'Y':
+					score += 4;
+					break;
+				case 'k':
+				case 'K':
+					score += 5;
+					break;
+				case 'j':
+				case 'J':
+				case 'x':
+				case 'X':
+					score += 8;
+					break;
+				case 'q':
+				case 'Q':
+				case 'z':
+				case 'Z':
+					score += 10;
+					break;
+			}
+		}
+
+		return score;
+
 	}
 
 	/**
@@ -150,7 +258,16 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		String number = "";
+		for(int i=0; i<string.length(); i++) {
+			char digit = string.charAt(i);
+			if(digit == '-' || digit == ' ' || digit == '(' || digit == ')' || digit == '.') {
+				continue;
+			}
+			number = number + string.charAt(i);
+
+		}
+		return number;
 	}
 
 	/**
@@ -163,9 +280,26 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
-	}
+			Map <String,Integer> map = new HashMap<>(); // Map data structure to store the data
+			String[] list = string.split(" "); // separating every word in the string by splitting at spaces
+
+			for (String i : list) // started looping to find frequency
+			{
+				String word = i.toLowerCase();
+				if (map.containsKey(word)) // mapping the word to get freqency
+				{
+					int count = map.get(word);
+					map.put(word, count + 1); // if it contains it will increment and put in map
+				}
+				else
+				{
+					map.put(word, 1);
+				}
+			}
+			return map; // returning the map to main function
+		}
+
+
 
 	/**
 	 * 7. Implement a binary search algorithm.
@@ -263,9 +397,27 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		int n=input;
+		int digits=0;
+		int sum=0;
+		while(n>0)
+		{
+			n=n/10;
+			digits++;
+		}
+		int a=input;
+		while(a>0)
+		{
+			int num = a%10;
+			sum+=Math.pow(num, digits);
+			a=a/10;
+		}
+		if(sum==input)
+			return true;
+		else
+			return false;
 	}
+
 
 	/**
 	 * 10. Compute the prime factors of a given natural number.
@@ -373,7 +525,6 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
 			return null;
 		}
 
@@ -534,7 +685,105 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
-		// TODO Write an implementation for this method declaration
+		String[] twoNums = string.split(" ");
+		int num1 = Integer.parseInt(twoNums[2]);
+		String numberString = "";
+
+		if (twoNums[3].equals("plus")) {
+			for (int i=0; i<twoNums[4].length(); i++) {
+				switch(twoNums[4].charAt(i)) {
+					case '0':
+					case '1':
+					case '2':
+					case '3':
+					case '4':
+					case '5':
+					case '6':
+					case '7':
+					case '8':
+					case '9':
+					case '-':
+						numberString += twoNums[4].charAt(i);
+						break;
+					default:
+				}
+			}
+			int num2 = Integer.parseInt(numberString);
+			int sum = num1+num2;
+			return sum;
+		}
+
+		else if (twoNums[3].equals("minus")) {
+			for (int i=0; i<twoNums[4].length(); i++) {
+				switch(twoNums[4].charAt(i)) {
+					case '0':
+					case '1':
+					case '2':
+					case '3':
+					case '4':
+					case '5':
+					case '6':
+					case '7':
+					case '8':
+					case '9':
+					case '-':
+						numberString += twoNums[4].charAt(i);
+						break;
+					default:
+				}
+			}
+			int num2 = Integer.parseInt(numberString);
+			int difference = num1-num2;
+			return difference;
+		}
+
+		else if (twoNums[3].equals("multiplied")) {
+			for (int i=0; i<twoNums[5].length(); i++) {
+				switch(twoNums[5].charAt(i)) {
+					case '0':
+					case '1':
+					case '2':
+					case '3':
+					case '4':
+					case '5':
+					case '6':
+					case '7':
+					case '8':
+					case '9':
+					case '-':
+						numberString += twoNums[5].charAt(i);
+						break;
+					default:
+				}
+			}
+			int num2 = Integer.parseInt(numberString);
+			int product = num1*num2;
+			return product;
+		}
+
+		else if (twoNums[3].equals("divided")) {
+			for (int i=0; i<twoNums[5].length(); i++) {
+				switch(twoNums[5].charAt(i)) {
+					case '0':
+					case '1':
+					case '2':
+					case '3':
+					case '4':
+					case '5':
+					case '6':
+					case '7':
+					case '8':
+					case '9':
+					case '-':
+						numberString += twoNums[5].charAt(i);
+						break;
+					default:
+				}
+			}
+			int num2 = Integer.parseInt(numberString);
+			int quotient = num1/num2;
+			return quotient;
+		}
 		return 0;
 	}
 
