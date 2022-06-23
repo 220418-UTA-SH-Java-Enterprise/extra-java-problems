@@ -1,6 +1,7 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,9 +15,21 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String reverse(String string) {
-		
-		return "";
+		String result = "";
+		//1. split string into a char array
+		char[] letters = string.toCharArray();
+		//2. iterate thru array backwards
+		for(int i = letters.length - 1; i >= 0; i--) {
+			result += letters[i];
+		}
+		System.out.println(result);
+		//3. for each char, concat the letter into result string
+		//4. return result
+		return result;
 	}
+
+
+
 
 	/**
 	 * 2. Convert a phrase to its acronym. Techies love their TLA (Three Letter
@@ -27,9 +40,32 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		// 1. grab first letter of each word and add to array
+		// 2. iterate thru array
+		// 3. concat each letter into result string
+		// 4. capitalize all letters
+
+		String result2 = phrase.replaceAll("\\B.|\\P{L}", "").toUpperCase();
+		return result2;
+
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	/**
 	 * 3. Determine if a triangle is equilateral, isosceles, or scalene. An
@@ -81,21 +117,44 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			if ((sideOne == sideTwo) && (sideOne == sideThree)) {
+			return true;
+			} else {
+			return false; 
+			}
 		}
 
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
+			if ((sideOne == sideTwo) || (sideOne == sideThree) || (sideTwo == sideThree)) {
+			return true;
+			} else {
 			return false;
+			}
 		}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
+			if ((sideOne != sideTwo) && (sideOne != sideThree) && (sideTwo != sideThree)) {
+			return true;
+			} else {
 			return false;
+			}
 		}
 
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	/**
 	 * 4. Given a word, compute the scrabble score for that word.
@@ -112,10 +171,78 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
+
+
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+	
+		String onePoint = "A, E, I, O, U, L, N, R, S, T";
+		String twoPoint = "D, G";
+		String threePoint = "B, C, M, P";
+		String fourPoint = "F, H, V, W, Y";
+		String fivePoint = "K";
+		String eightPoint = "J, X";
+		String tenPoint = "Q, Z";
+		
+		int points = 0;
+		
+		for(int i=0; i<string.length(); i++) {
+			char letter = Character.toUpperCase(string.charAt(i));
+			
+			if (onePoint.contains(Character.toString(letter))){
+				points += 1;
+			}
+			
+			if (twoPoint.contains(Character.toString(letter))){
+				points += 2;
+			}
+			
+			if (threePoint.contains(Character.toString(letter))){
+				points += 3;
+			}
+			
+			if (fourPoint.contains(Character.toString(letter))){
+				points += 4;
+			}
+			
+			if (fivePoint.contains(Character.toString(letter))){
+				points += 5;
+			}
+			
+			if (eightPoint.contains(Character.toString(letter))){
+				points += 8;
+			}
+			
+			if (tenPoint.contains(Character.toString(letter))){
+				points += 10;
+			}
+		}
+		
+		return points;
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	/**
 	 * 5. Clean up user-entered phone numbers so that they can be sent SMS messages.
@@ -148,10 +275,26 @@ public class EvaluationService {
 	 * Note: As this exercise only deals with telephone numbers used in
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
+
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String number = "";
+		
+		for(int i=0; i<string.length(); i++) {
+			if(Character.isDigit(string.charAt(i))){
+				number = number + string.charAt(i);
+			}
+		}
+		
+		if((number.length() > 10) || (number.length() < 10)){
+			return null;
+		} else {
+			return number;
+		}
+		
 	}
+
+
+
 
 	/**
 	 * 6. Given a phrase, count the occurrences of each word in that phrase.
@@ -163,9 +306,19 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
+
+
+
+
 		return null;
 	}
+
+
+
+
+
+
+
 
 	/**
 	 * 7. Implement a binary search algorithm.
@@ -534,7 +687,7 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
-		// TODO Write an implementation for this method declaration
+
 		return 0;
 	}
 
