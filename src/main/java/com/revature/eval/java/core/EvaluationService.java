@@ -1,6 +1,9 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,9 +17,16 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String reverse(String string) {
+		String str2 = "";
 		
-		return "";
-	}
+		for (int i = string.length()-1; i>=0;i--) {
+			str2 += string.charAt(i);
+			
+		}
+		
+	
+	return str2;	
+}
 
 	/**
 	 * 2. Convert a phrase to its acronym. Techies love their TLA (Three Letter
@@ -27,8 +37,13 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
+		String acronym = "";
 		// TODO Write an implementation for this method declaration
-		return null;
+		for (int i = 0; i<phrase.length(); i++) {
+			if (Character.isUpperCase(phrase.charAt(i)))
+				acronym = acronym + phrase.charAt(i);
+		}
+		return acronym;
 	}
 
 	/**
@@ -82,16 +97,26 @@ public class EvaluationService {
 
 		public boolean isEquilateral() {
 			// TODO Write an implementation for this method declaration
+			if(sideOne == sideTwo || sideTwo == sideThree || sideOne == sideThree) {
+				return true;
+			}else
+				
 			return false;
 		}
 
 		public boolean isIsosceles() {
 			// TODO Write an implementation for this method declaration
+			if(sideOne == sideTwo || sideTwo==sideThree || sideOne == sideThree) {
+				return true;
+			}else
 			return false;
 		}
 
 		public boolean isScalene() {
 			// TODO Write an implementation for this method declaration
+			if(sideOne!= sideTwo && sideTwo!=sideThree && sideOne !=sideThree) {
+				return true;
+			}else
 			return false;
 		}
 
@@ -150,7 +175,18 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		String cleanNumber = "";
+		for (int i = 1; i<string.length(); i++) {
+			if (string.substring(i,i+1).matches("\\d")) {
+				cleanNumber = cleanNumber.concat(string.substring(i,i+1));
+			}
+		}
+		
+		if(cleanNumber.length() == 11) {
+			cleanNumber = cleanNumber.replaceFirst("1","");
+		}
+
+		return cleanNumber;
 	}
 
 	/**
@@ -164,7 +200,16 @@ public class EvaluationService {
 	 */
 	public Map<String, Integer> wordCount(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		Map<String, Integer> wordList = new HashMap<>();
+		String[] parsedString = string.split("\\s+");
+		for (String word : parsedString) {
+			if (wordList.containsKey(word)) {
+				wordList.put(word, wordList.get(word) + 1);
+			} else {
+				wordList.put(word, 1);
+			}
+		}
+		return wordList;
 	}
 
 	/**
@@ -244,7 +289,28 @@ public class EvaluationService {
 	 */
 	public String toPigLatin(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		String temp = "";
+		String returnString = "";
+		int i = 0;
+		
+		if(string.toUpperCase().startsWith("A") || string.toUpperCase().startsWith("E") || string.toUpperCase().startsWith("I") 
+				|| string.toUpperCase().startsWith("O") || string.toUpperCase().startsWith("U")) {
+				return string += "ay";
+		}
+		else {
+			while (!(string.toUpperCase().charAt(i) == 'A') && !(string.toUpperCase().charAt(i) == 'E') && 
+					!(string.toUpperCase().charAt(i) == 'I') && !(string.toUpperCase().charAt(i) == 'O') 
+					&& !(string.toUpperCase().charAt(i) == 'U')) {
+				temp += string.charAt(i);
+				i++;
+			}
+			while (i<string.length()) {
+				returnString += string.charAt(i);
+				i++;
+			}
+			returnString += temp;
+			return returnString += "ay";
+		}
 	}
 
 	/**
@@ -264,7 +330,15 @@ public class EvaluationService {
 	 */
 	public boolean isArmstrongNumber(int input) {
 		// TODO Write an implementation for this method declaration
-		return false;
+		int sum=0,rem,temp;  
+	    temp=input;  
+	    while(input>0)  
+	    {  
+	       rem=input%10;  
+	       input=input/10;  
+	       sum=sum+(rem*rem*rem);  
+	    }
+	   return sum==temp; 
 	}
 
 	/**
@@ -279,8 +353,27 @@ public class EvaluationService {
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		List<Long> retVal = new ArrayList<>();
+        Long remainder = l;
+        while(remainder > 1){
+            Long prime = smallestPrime(remainder);
+            retVal.add(prime);
+            remainder /= prime;
+        };
+        return retVal;
+		
 	}
+
+    private Long smallestPrime(Long l){
+        Long prime = 2L;
+        while(prime <= Math.sqrt(l)){
+            if(l % prime == 0){
+                return prime;
+            }
+            prime++;
+        }
+        return l;
+    }
 
 	/**
 	 * 11. Create an implementation of the rotational cipher, also sometimes called
@@ -318,6 +411,7 @@ public class EvaluationService {
 
 		public String rotate(String string) {
 			// TODO Write an implementation for this method declaration
+			
 			return null;
 		}
 
@@ -337,8 +431,8 @@ public class EvaluationService {
 	 */
 	public int calculateNthPrime(int i) {
 		// TODO Write an implementation for this method declaration
-		return 0;
-	}
+      return 0;		  
+	} 
 
 	/**
 	 * 13 & 14. Create an implementation of the atbash cipher, an ancient encryption
